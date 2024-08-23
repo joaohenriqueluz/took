@@ -1,0 +1,6 @@
+publish.bat
+build_local.bat
+build
+dist
+**/__pycache__
+took.egg-info

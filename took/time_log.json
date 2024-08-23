@@ -1,0 +1,15 @@
+{
+    "current_task": "coding",
+    "tasks": {
+        "Documentation": {
+            "task_name": "Documentation",
+            "last_updated": "2024-08-23T02:12:07.446488",
+            "time_spent": 434822
+        },
+        "coding": {
+            "task_name": "coding",
+            "last_updated": "2024-08-23T03:07:16.075216",
+            "time_spent": 3304
+        }
+    }
+}
