@@ -13,60 +13,65 @@ TASK_NAME = "task_name"
 LAST_UPDATED = "last_updated"
 TIME_SPENT = "time_spent"
 
-# Display the current task
-def show_current_task(tt):
+# Display the status
+def show_status(tt):
     console = Console()
     current_task = tt.current_task
     task_info = tt.tasks.get(current_task, {})
     
     if task_info:
-        console.print(Panel(f"Current Task: {current_task}", style="bold green", expand=False))
-        table = Table(show_header=True, header_style="bold magenta")
-        table.add_column("Task Name", style="dim", width=20)
-        table.add_column("Last Updated", style="dim", width=30)
-        table.add_column("Time Spent (s)", style="dim")
-        table.add_row(
-            task_info["task_name"],
-            task_info["last_updated"],
-            tt.format_time_spent(task_info["time_spent"])
-        )
-        console.print(table)
+        console.print(f"Current Task: {current_task}", style="bold green", end='') 
+        if tt.paused:
+            console.print(f" (paused)", style="red") 
+        else:
+            console.print(f" (in progress)", style="orange1") 
+        formatted_time_spent = tt.format_time_spent(task_info[TIME_SPENT])
+        console.print(f"Time Spent (s): {formatted_time_spent}")
+        console.print(f"Last Updated: {task_info[LAST_UPDATED]}")
+        
+
     else:
         console.print(f"No information available for current task: {current_task}")
 
-# Display all tasks
 def show_all_tasks(tt):
     console = Console()
     tasks = tt.tasks
-    
+    if not tasks:
+        console.print(f"No tasks logged.")
+        return
+    table_style = "dim" if tt.paused else ""
     table = Table(show_header=True, header_style="bold magenta")
-    table.add_column("Task Name", style="dim", width=20)
-    table.add_column("Last Updated", style="dim", width=30)
-    table.add_column("Time Spent (s)", style="dim")
+    table.add_column("", style=table_style, width=1)
+    table.add_column("Task Name", style=table_style, width=20)
+    table.add_column("Time Spent (s)", style=table_style)
+    table.add_column("Last Updated", style=table_style, width=30)
     
-    for _, entry in tt.tasks.items():
-        formatted_time_spent = tt.format_time_spent(entry[TIME_SPENT])
-        table.add_row(entry[TASK_NAME], entry[LAST_UPDATED], formatted_time_spent)
-        
-        # Display the daily log
-        console.print(f"Task: {entry[TASK_NAME]}")
-        for date, seconds in sorted(entry["log"].items()):
-            formatted_time = tt.format_time_spent(seconds)
-            console.print(f"- {date}: {formatted_time}")
+    for key, task in tt.tasks.items():
+        _style = ""
+        current_indicator = ""
+        if key in tt.current_task:
+            _style = "bold green"
+            current_indicator = "*"
 
-
+        formatted_time_spent = tt.format_time_spent(task[TIME_SPENT])
+        table.add_row(current_indicator,
+        task[TASK_NAME],
+        formatted_time_spent,
+        task[LAST_UPDATED],
+        style=_style)
     
-    console.print(Panel("All Tasks", style="bold blue", expand=False))
+    if tt.paused:
+        console.print(Panel("Took Tasks' Status", style="bold red", expand=False, subtitle="Paused"))
+    else:
+        console.print(Panel("Took Tasks' Status", style="bold blue", expand=False))
     console.print(table)
 
 def show_task_log(tt, task_name):
     console = Console()
     task = tt.tasks.get(task_name)
-    
     if not task:
         console.print(f"No task found with the name '{task_name}'", style="bold red")
         return
-    
     console.print(Panel(f"Task Log for: {task_name}", style="bold green", expand=False))
     table = Table(show_header=True, header_style="bold magenta")
     table.add_column("Date", style="dim", width=20)
@@ -94,7 +99,9 @@ def aggregate_time_per_day(tasks, dates):
                     daily_totals[date][task_name] = seconds
     return daily_totals
 
-def show_task_reports(tt, n_days=7):
+def show_task_reports(tt, n_days):
+    if not n_days:
+        n_days = 1
     console = Console()
     console.print(Panel(f"Reports (Last {n_days} Days)", style="bold blue", expand=False))
     
@@ -115,32 +122,3 @@ def show_task_reports(tt, n_days=7):
 
         console.print("")
 
-# Main function to navigate through tasks
-def main(tt):
-    console = Console()
-
-    while True:
-        console.print(Panel("Took UI", style="bold cyan", expand=False))
-        console.print("1. View Current Task")
-        console.print("2. View All Tasks")
-        console.print("3. View Task Log")
-        console.print("4. View Dashboard")
-        console.print("5. Exit")
-        
-        choice = Prompt.ask("Choose an option", choices=["1", "2", "3", "4", "5", "6"])
-        tt.refresh()
-        if choice == "1":
-            show_current_task(tt)
-        elif choice == "2":
-            show_all_tasks(tt)
-        elif choice == "3":
-            task_name = Prompt.ask("Enter task name")
-            show_task_log(tt, task_name)
-        elif choice == "4":
-            show_task_reports(tt)
-        elif choice == "5":
-            console.print("Exiting...")
-            break
-
-# if __name__ == "__main__":
-#     main()

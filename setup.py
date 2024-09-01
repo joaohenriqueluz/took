@@ -2,11 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name="took",
-    version="0.0.6",
+    version="0.0.7",
     packages=find_packages(),
     entry_points={
         "console_scripts": [
             "took=took.took:main",
+            "tk=took.took:main",
         ],
     },
     install_requires=[

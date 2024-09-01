@@ -1,14 +1,16 @@
 # Took
 
-Took is a command-line tool for time tracking and task management, designed to help you manage and monitor your time spent on various tasks and projects. With Took, you can track time, manage tasks, and visualize where your time goes with ease. It's simple to set up and integrates seamlessly with your workflow.
+Took is a command-line tool for time tracking and task management, designed to help you efficiently manage and monitor the time spent on various tasks and projects. With Took, you can start, pause, and resume tasks, view detailed reports, and manage your time more effectively.  It's simple to set up and integrates seamlessly with your workflow.
 
 ## Features
 
-- **Track Time:** Log time spent on tasks and view detailed reports.
-- **Pause and Resume:** Pause and resume tasks to accurately reflect your working hours.
-- **Time Logs:** Export time logs and visualize them with rich CLI-based graphics.
-- **Terminal Dashboard:** Use a terminal dashboard with graphical representations of your time logs.
-- **Interactive Navigation:** Easily navigate through tasks and projects using an intuitive CLI interface.
+- **Track Time:** Start tracking time for specific tasks, allowing you to keep a detailed log of how much time you spend on each task.
+- **Pause and Resume:** Easily pause and resume tasks, ensuring that your time logs are accurate and reflect actual working hours.
+- **Task Creation:** Automatically create tasks when starting time tracking for a task that doesn't exist.
+- **Task Status:** View the status of all tasks, including time spent and the last time they were updated.
+- **Task Logs:** Log time spent on tasks and store daily logs.
+- **Daily Reports:** Generate reports to visualize the time spent on tasks over a specified number of days.
+- **Persistent Storage:** All tasks and time logs are stored in a JSON file within the project directory, ensuring that your data is persistent across sessions and can be committed to the VCS.
 
 ## Installation
 
@@ -28,36 +30,66 @@ Before using Took, initialize it in your project directory:
 took init
 ```
 
-This command creates a `.took` directory and initializes the `time_log.json` file.
+This command creates a `.took` directory and initializes the `took.json` file in the current directory.
 
-### Track Time
+### Start Tracking Time
 
 To start tracking time for a task:
 
 ```bash
-took start <task_name>
+took start -t <task_name>
 ```
 
-To pause tracking time:
+If the task doesn't already exist, it will be created automatically.
+
+### Pause Tracking Time
+
+To pause the currently active task:
 
 ```bash
 took pause
 ```
 
+### Resume a Paused Task
+
+To resume tracking the paused task:
+
+```bash
+took start
+```
+
+This command will resume the most recently paused task.
+
 ### View Task Status
 
-View the current status of tracked tasks:
+To view the current status of all tracked tasks, including time spent and last updated time:
 
 ```bash
 took status
 ```
 
-### View Daliy Reports
+### View All Tracked Tasks
 
-To visualize time spent on each task per day:
+To see all tasks that are currently being tracked:
 
 ```bash
-took report {n_days}
+took show-all
+```
+
+### View Task Logs
+
+To view the time logged per day for a specific task:
+
+```bash
+took log -t <task_name>
+```
+
+### Generate Daily Reports
+
+To generate a report that shows the time spent on each task over the last `n` days:
+
+```bash
+took report -d {n_days}
 ```
 
 ## Contributing
