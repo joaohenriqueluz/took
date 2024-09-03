@@ -27,7 +27,7 @@ pip install took
 Before using Took, initialize it in your project directory:
 
 ```bash
-took init
+$ took init
 ```
 
 This command creates a `.took` directory and initializes the `took.json` file in the current directory.
@@ -37,7 +37,7 @@ This command creates a `.took` directory and initializes the `took.json` file in
 To start tracking time for a task:
 
 ```bash
-took start -t <task_name>
+$ took start -t <task_name>
 ```
 
 If the task doesn't already exist, it will be created automatically.
@@ -47,7 +47,7 @@ If the task doesn't already exist, it will be created automatically.
 To pause the currently active task:
 
 ```bash
-took pause
+$ took pause
 ```
 
 ### Resume a Paused Task
@@ -55,7 +55,7 @@ took pause
 To resume tracking the paused task:
 
 ```bash
-took start
+$ took start
 ```
 
 This command will resume the most recently paused task.
@@ -65,7 +65,7 @@ This command will resume the most recently paused task.
 To view the current status of all tracked tasks, including time spent and last updated time:
 
 ```bash
-took status
+$ took status
 ```
 
 ### View All Tracked Tasks
@@ -73,7 +73,7 @@ took status
 To see all tasks that are currently being tracked:
 
 ```bash
-took show-all
+$ took show-all
 ```
 
 ### View Task Logs
@@ -81,7 +81,7 @@ took show-all
 To view the time logged per day for a specific task:
 
 ```bash
-took log -t <task_name>
+$ took log -t <task_name>
 ```
 
 ### Generate Daily Reports
@@ -89,7 +89,26 @@ took log -t <task_name>
 To generate a report that shows the time spent on each task over the last `n` days:
 
 ```bash
-took report -d {n_days}
+$ took report -d {n_days}
+
+╭───────────────────────╮
+│ Reports (Last 3 Days) │
+╰───────────────────────╯
+2024-09-01
+Task A: █████████████████████ 51m-7s
+Task B: ███ 8m-53s
+Task C: ████ 11m-7s
+
+2024-09-02
+Task A: ████████████████████ 11h-57m-47s
+Task B: ██ 1h-47m-12s
+Task C: ██████ 4h-10m-8s
+
+2024-09-03
+Task A: ██████ 27m-21s
+Task B: █████ 20m-55s
+Task C: ██████████████████ 1h-12m-47s
+
 ```
 
 ## Contributing

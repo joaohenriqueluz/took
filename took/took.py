@@ -1,5 +1,5 @@
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import os
 import sys
@@ -82,17 +82,41 @@ class TimeTracker:
         current_task = self.tasks[self.current_task]
         last_updated = datetime.fromisoformat(current_task[LAST_UPDATED])
         now = datetime.now()
+
         if not self.paused:
             elapsed_time = now - last_updated
             seconds_spent = int(elapsed_time.total_seconds())
+
+            # Iterate through each day between last_updated and now
+            current_day = last_updated.date()
+            end_day = now.date()
+
+            while current_day <= end_day:
+                date_str = current_day.isoformat()
+
+                if current_day == last_updated.date():
+                    # Calculate time from last_updated to end of that day
+                    day_end = datetime.combine(current_day, datetime.max.time())
+                    if day_end > now:
+                        day_end = now
+                    time_for_day = (day_end - last_updated).total_seconds()
+                elif current_day == now.date():
+                    # Calculate time from start of today to now
+                    time_for_day = (now - datetime.combine(current_day, datetime.min.time())).total_seconds()
+                else:
+                    # Full day (24 hours)
+                    time_for_day = 86400
+
+                if date_str in current_task["log"]:
+                    current_task["log"][date_str] += int(time_for_day)
+                else:
+                    current_task["log"][date_str] = int(time_for_day)
+
+                current_day += timedelta(days=1)
+
             current_task[TIME_SPENT] += seconds_spent
-            # Log the time spent in the daily log
-            date_str = last_updated.date().isoformat()
-            if date_str in current_task["log"]:
-                current_task["log"][date_str] += seconds_spent
-            else:
-                current_task["log"][date_str] = seconds_spent
         current_task[LAST_UPDATED] = now.isoformat()
+
 
         
 
