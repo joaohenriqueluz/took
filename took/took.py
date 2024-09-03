@@ -3,7 +3,7 @@ from datetime import datetime
 import json
 import os
 import sys
-import took.ui
+import took.ui as ui
 
 TOOK_DIR = ".took"
 FILE_NAME = "took.json"
