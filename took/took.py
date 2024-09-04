@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import took.ui as ui
+import took.git_hooks as git_hooks
 
 TOOK_DIR = ".took"
 FILE_NAME = "took.json"
@@ -34,7 +35,6 @@ class TimeTracker:
             print("Initialized new empty Took log in the current directory.")
         else:
             print("Took log already exists in this directory. No action taken.")
-        sys.exit(0)
         
 
     # Check if the current directory or any parent directory is a tracker project
@@ -195,7 +195,8 @@ def main():
     parser = argparse.ArgumentParser(description="Task Time Tracking Tool")
     subparsers = parser.add_subparsers(dest="command", required=False)
 
-    subparsers.add_parser('init', help="Initialize a tracking log in the current working directory.")
+    init_parser = subparsers.add_parser('init', help="Initialize a tracking log in the current working directory.")
+    init_parser.add_argument('--git',  help="Initialize Git Hooks to use took commands",action='store_true')
 
     start_aliases = ['s']
     start_parser = subparsers.add_parser('start', help="Start a new task.", aliases=start_aliases)
@@ -220,9 +221,13 @@ def main():
     args = parser.parse_args()
     
     tt = TimeTracker()
+    
     try:
         if args.command == "init":
             tt.init_file()
+            if (args.git):
+                git_hooks.init_git_hooks()
+            sys.exit(0)
         else:
             tt.check_file()
             tt.load_data()

@@ -2,8 +2,11 @@ from setuptools import setup, find_packages
 
 setup(
     name="took",
-    version="0.0.10",
+    version="0.0.11",
     packages=find_packages(),
+     package_data={
+        'took': ['resources/hooks/*.sh'],
+    },
     entry_points={
         "console_scripts": [
             "took=took.took:main",
