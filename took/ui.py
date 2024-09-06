@@ -7,10 +7,16 @@ from rich.text import Text
 from datetime import datetime, timedelta
 from took.constants import *
 
-
-
 # Display the status
 def show_status(tt):
+    """
+    Displays the status of the current task.
+    - Shows whether the task is paused or in progress.
+    - Displays the time spent and the last update time.
+    
+    Args:
+        tt (TimeTracker): An instance of the TimeTracker class containing task data.
+    """
     console = Console()
     current_task = tt.current_task
     task_info = tt.tasks.get(current_task, {})
@@ -27,7 +33,17 @@ def show_status(tt):
     else:
         console.print(f"No information available for current task ({current_task}).")
 
+
 def show_all_tasks(tt, include_done):
+    """
+    Displays a table with all tracked tasks.
+    - Shows the task name, time spent, and the last update for each task.
+    - Highlights the current task and can include or exclude completed tasks.
+    
+    Args:
+        tt (TimeTracker): An instance of the TimeTracker class containing task data.
+        include_done (bool): Whether to include tasks marked as done in the output.
+    """
     console = Console()
     tasks = tt.tasks
     if not tasks:
@@ -66,7 +82,15 @@ def show_all_tasks(tt, include_done):
         console.print(Panel("Took Tasks' Status", style="bold blue", expand=False))
     console.print(table)
 
+
 def show_task_log(tt, task_name):
+    """
+    Displays the log of time spent on a specific task, with a breakdown by day.
+    
+    Args:
+        tt (TimeTracker): An instance of the TimeTracker class containing task data.
+        task_name (str): The name of the task whose log will be displayed.
+    """
     console = Console()
     task = tt.tasks.get(task_name)
     if not task:
@@ -85,10 +109,30 @@ def show_task_log(tt, task_name):
 
 
 def get_previous_days(n):
+    """
+    Returns a list of the last 'n' days, including today.
+    
+    Args:
+        n (int): The number of days to include.
+    
+    Returns:
+        list: A list of dates in ISO format, starting from today and going back 'n' days.
+    """
     today = datetime.now().date()
     return [(today - timedelta(days=i)).isoformat() for i in range(n-1, -1, -1)]
 
+
 def aggregate_time_per_day(tasks, dates):
+    """
+    Aggregates the time spent on all tasks per day.
+    
+    Args:
+        tasks (dict): A dictionary of all tasks with their logs.
+        dates (list): A list of dates for which to aggregate the time.
+    
+    Returns:
+        dict: A dictionary with dates as keys and the time spent per task for each day.
+    """
     daily_totals = {date: {} for date in dates}
     for task_name, task in tasks.items():
         for date, seconds in task["log"].items():
@@ -99,7 +143,16 @@ def aggregate_time_per_day(tasks, dates):
                     daily_totals[date][task_name] = seconds
     return daily_totals
 
+
 def show_task_reports(tt, n_days):
+    """
+    Displays a report of time spent on tasks over the last 'n_days'.
+    - Shows each day, with a bar graph of the time spent on each task.
+    
+    Args:
+        tt (TimeTracker): An instance of the TimeTracker class containing task data.
+        n_days (int): The number of days to include in the report.
+    """
     if not n_days:
         n_days = 1
     console = Console()
@@ -121,4 +174,3 @@ def show_task_reports(tt, n_days):
             console.print(f"{task_name}: {bar} {formatted_time}")
 
         console.print("")
-

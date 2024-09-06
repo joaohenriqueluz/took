@@ -1,0 +1,35 @@
+site_name: Took Documentation
+
+nav:
+    - Home: index.md
+    - Usage:
+      - getting-started.md
+    - Api Reference:
+      - api-reference/timetracker.md
+      - api-reference/ui.md
+      - api-reference/git-hooks.md
+    - License: License.md
+
+theme:
+  name: readthedocs
+
+# theme:
+#   name: simple-blog
+#   theme_style: light
+#   site_name_style: normal
+#   title_style: bold
+#   colors:
+#     text: black
+#     title: black
+#     primary: black
+#     background: white
+#   components:
+#     site_name: true
+#     title: true
+#     menu: true
+#     preview: true
+#     footer: true
+
+plugins:
+- search
+- mkdocstrings

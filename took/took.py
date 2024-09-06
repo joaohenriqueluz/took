@@ -7,16 +7,24 @@ import took.ui as ui
 import took.git_hooks as git_hooks
 from took.constants import *
 
-
 class TimeTracker:
     def __init__(self):
-      self.tasks = {}
-      self.current_task = None
-      self.paused = False
-      self.root = None
+        """
+        Initializes the TimeTracker object with default values. 
+        - Initializes an empty task dictionary.
+        - Sets the current task and root directory to None and pause state to False.
+        """
+        self.tasks = {}
+        self.current_task = None
+        self.paused = False
+        self.root = None
 
-    # Initialize the JSON file if it does not exist
     def init_file(self):
+        """
+        Initializes the JSON file for tracking tasks if it doesn't exist. 
+        - Creates the directory and file structure for storing the task log.
+        - Initializes the log with default values (empty tasks, no current task, and paused state).
+        """
         if not os.path.exists(TOOK_DIR):
             os.makedirs(TOOK_DIR)
             with open(os.path.join(TOOK_DIR, FILE_NAME), 'w') as file:
@@ -29,9 +37,15 @@ class TimeTracker:
         else:
             print("Took log already exists in this directory. No action taken.")
         
-
-    # Check if the current directory or any parent directory is a tracker project
     def check_file(self):
+        """
+        Checks if the current or any parent directory contains a Took tracker project.
+        - Searches upwards from the current directory.
+        - If no Took directory is found, creates a global Took directory in the user's home directory.
+        
+        Returns:
+            str: The path to the Took directory.
+        """
         current_dir = os.getcwd()
 
         while True:
@@ -42,8 +56,7 @@ class TimeTracker:
             if parent_dir == current_dir:  # reached the root without finding .took
                 break
             current_dir = parent_dir
-         
-         # Fallback to a global .took file in the user's home directory
+
         home_dir = os.path.expanduser("~")
         central_took_dir = os.path.join(home_dir, TOOK_DIR)
         if not os.path.exists(central_took_dir):
@@ -60,20 +73,33 @@ class TimeTracker:
         return self.root
     
     def load_data(self):
-      data = { CURRENT: None, TASKS:{} }
-      if (self.root is not None) and os.path.exists(self.root):
-          with open(os.path.join(self.root, FILE_NAME), 'r') as file:
-              data = json.load(file)
-      self.tasks = data[TASKS]
-      self.current_task = data[CURRENT]
-      self.paused = data[PAUSED]
+        """
+        Loads task data from the JSON file into the TimeTracker object.
+        - Updates tasks, the current task, and the paused state based on the loaded data.
+        """
+        data = { CURRENT: None, TASKS:{} }
+        if (self.root is not None) and os.path.exists(self.root):
+            with open(os.path.join(self.root, FILE_NAME), 'r') as file:
+                data = json.load(file)
+        self.tasks = data[TASKS]
+        self.current_task = data[CURRENT]
+        self.paused = data[PAUSED]
 
     def save_data(self):
-      data = { CURRENT: self.current_task, TASKS: self.tasks, PAUSED: self.paused }
-      with open(os.path.join(self.root, FILE_NAME), 'w') as file:
-        json.dump(data, file, indent=4)
+        """
+        Saves the current state of tasks, the current task, and the paused state to the JSON file.
+        """
+        data = { CURRENT: self.current_task, TASKS: self.tasks, PAUSED: self.paused }
+        with open(os.path.join(self.root, FILE_NAME), 'w') as file:
+            json.dump(data, file, indent=4)
 
     def create_task(self, task_name):
+        """
+        Creates a new task in the tracker.
+        
+        Args:
+            task_name (str): The name of the task to create.
+        """
         self.tasks[task_name] = {
             TASK_NAME: task_name,
             LAST_UPDATED: None,
@@ -84,6 +110,10 @@ class TimeTracker:
         print(f"Added '{task_name}' to tracked tasks")
 
     def refresh(self):
+        """
+        Updates the time spent on the current task by calculating the time elapsed since it was last updated.
+        - If the task is not paused, it updates the daily logs and overall time spent.
+        """
         if self.current_task is None:
             return
         current_task = self.tasks[self.current_task]
@@ -125,6 +155,14 @@ class TimeTracker:
         current_task[LAST_UPDATED] = now.isoformat()
 
     def start_task(self, task_name):
+        """
+        Starts tracking a new or existing task.
+        - If a task name is provided, it creates the task if it doesn't exist.
+        - If no task is provided, it resumes the current task.
+        
+        Args:
+            task_name (str): The name of the task to start.
+        """
         if task_name is None:
             self.resume_task()
         else:
@@ -136,14 +174,22 @@ class TimeTracker:
             self.current_task = task_name
             print(f"Started tracking task: '{task_name}' at {now}")
 
-    def pause_task(self, ):
+    def pause_task(self):
+        """
+        Pauses the currently active task.
+        - Prints a message if no task is running.
+        """
         if self.current_task is None:
             print("No task is currently running. No action taken.")
             return
         self.paused = True
         print(f"Paused the current task '{self.current_task}'.")
-    
+
     def resume_task(self):
+        """
+        Resumes a paused task.
+        - If the current task is not paused or no task is paused, prints a warning message.
+        """
         if self.current_task is None:
             print("No paused task to resume.")
             return
@@ -153,8 +199,15 @@ class TimeTracker:
         self.paused = False
         self.refresh()
         print(f"Resuming task '{self.current_task}'.")
-    
+
     def remove_task(self, task_name):
+        """
+        Removes a task from the tracker.
+        - If the removed task is the current task, stops tracking it.
+        
+        Args:
+            task_name (str): The name of the task to remove.
+        """
         if task_name in self.tasks:
             del self.tasks[task_name]
             print(f"Task '{task_name}' removed from tracked tasks.")
@@ -166,6 +219,13 @@ class TimeTracker:
             print(f"Task '{task_name}' not found.")
 
     def done_task(self, task_name):
+        """
+        Marks a task as done.
+        - Updates the task's status and stops tracking it if it's the current task.
+        
+        Args:
+            task_name (str): The name of the task to mark as done.
+        """
         if task_name in self.tasks:
             self.refresh()
             self.tasks[task_name][DONE] = True
@@ -175,9 +235,18 @@ class TimeTracker:
                 self.pause = True
                 print("No task is currently running.")
         else:
-            print(f"Task '{task_name}' not found.")    
+            print(f"Task '{task_name}' not found.")
 
     def format_time_spent(self, total_seconds):
+        """
+        Formats the total time spent on a task into a human-readable string.
+        
+        Args:
+            total_seconds (int): Total number of seconds to format.
+        
+        Returns:
+            str: A formatted string showing the time spent in years, months, days, hours, minutes, and seconds.
+        """
         seconds_in_year = 60 * 60 * 24 * 365
         seconds_in_month = 60 * 60 * 24 * 30
         seconds_in_day = 60 * 60 * 24
@@ -206,8 +275,11 @@ class TimeTracker:
 
         return ''.join(parts) if parts else "0s"
 
-
     def show_status(self):
+        """
+        Displays the current status of all active tasks, including the time spent on each task.
+        - If no tasks are logged, prints a message.
+        """
         self.refresh()
         if len(self.tasks) == 0:
             print("No tasks logged.")
@@ -218,13 +290,17 @@ class TimeTracker:
                 print(f"\n|Task: {entry[TASK_NAME]}\n|-Last Updated: {entry[LAST_UPDATED]} \n|-Time Spent: {formatted_time_spent}\n")
 
 
-
 def main():
+    """
+    Main function to handle CLI commands using argparse.
+    - Supports commands for initializing logs, starting, pausing, marking tasks as done, and more.
+    - Executes the appropriate TimeTracker methods based on user input.
+    """
     parser = argparse.ArgumentParser(description="Task Time Tracking Tool")
     subparsers = parser.add_subparsers(dest="command", required=False)
 
     init_parser = subparsers.add_parser('init', help="Initialize a tracking log in the current working directory.")
-    init_parser.add_argument('--git',  help="Initialize Git Hooks to use took commands",action='store_true')
+    init_parser.add_argument('--git',  help="Initialize Git Hooks to use took commands", action='store_true')
 
     start_aliases = ['s']
     start_parser = subparsers.add_parser('start', help="Start a new task.", aliases=start_aliases)
@@ -242,7 +318,7 @@ def main():
 
     show_all_aliases = ['sa']
     show_all_parser = subparsers.add_parser('show-all', help="Show all tracked tasks.", aliases=show_all_aliases)
-    show_all_parser.add_argument('--done',  help="Include tasks marked as done when showing all tasks",action='store_true')
+    show_all_parser.add_argument('--done',  help="Include tasks marked as done when showing all tasks", action='store_true')
     
     status_aliases = ['st']
     subparsers.add_parser('status', help="Show current status.", aliases=status_aliases)
@@ -281,7 +357,7 @@ def main():
             elif args.command == "show-all" or args.command in show_all_aliases:
                 ui.show_all_tasks(tt, args.done)
             elif args.command == "log":
-                ui.show_task_log(tt,args.task)
+                ui.show_task_log(tt, args.task)
             elif args.command == "report" or args.command in report_aliases:
                 ui.show_task_reports(tt, args.days)
             else:
@@ -292,7 +368,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-        
-        
