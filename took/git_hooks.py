@@ -9,7 +9,7 @@ def init_git_hooks():
             print("No .git directory found. Git hooks will not be installed.")
             return
 
-        hook_files = ["pre-commit","post-commit","post-checkout"]
+        hook_files = ["pre-commit","post-commit","post-checkout", "post-merge"]
         for hook_name in hook_files:
             resource_name = f"resources/hooks/{hook_name}.sh"
             resource_path = pkg_resources.resource_filename('took', resource_name)
