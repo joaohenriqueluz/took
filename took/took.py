@@ -49,9 +49,22 @@ class TimeTracker:
             if parent_dir == current_dir:  # reached the root without finding .took
                 break
             current_dir = parent_dir
-        
-        print("Error: No .took directory found. Run `init` to create one.")
-        sys.exit(1)
+         
+         # Fallback to a global .took file in the user's home directory
+        home_dir = os.path.expanduser("~")
+        central_took_dir = os.path.join(home_dir, TOOK_DIR)
+        if not os.path.exists(central_took_dir):
+            os.makedirs(central_took_dir)
+            print(f"Created a global Took directory at {central_took_dir}")
+            with open(os.path.join(central_took_dir, FILE_NAME), 'w') as file:
+                json.dump({
+                    CURRENT: None,
+                    TASKS: {},
+                    PAUSED: False
+                }, file, indent=4)
+            print("Initialized new empty Took log in the current directory.")
+        self.root = central_took_dir
+        return self.root
     
     def load_data(self):
       data = { CURRENT: None, TASKS:{} }
@@ -117,9 +130,6 @@ class TimeTracker:
             current_task[TIME_SPENT] += seconds_spent
         current_task[LAST_UPDATED] = now.isoformat()
 
-
-        
-
     def start_task(self, task_name):
         if task_name is None:
             self.resume_task()
@@ -149,6 +159,17 @@ class TimeTracker:
         self.paused = False
         self.refresh()
         print(f"Resuming task '{self.current_task}'.")
+    
+    def remove_task(self, task_name):
+        if task_name in self.tasks:
+            del self.tasks[task_name]
+            print(f"Task '{task_name}' removed from tracked tasks.")
+            if self.current_task == task_name:
+                self.current_task = None
+                print("No task is now set as current task.")
+        else:
+            print(f"Task '{task_name}' not found.")
+
 
     def format_time_spent(self, total_seconds):
         seconds_in_year = 60 * 60 * 24 * 365
@@ -205,6 +226,10 @@ def main():
     pause_aliases = ['p']
     subparsers.add_parser('pause', help="Pause the current task.", aliases=pause_aliases)
 
+    remove_aliases = ['rm']
+    remove_parser = subparsers.add_parser('remove', help="Remove a tracked task.", aliases=remove_aliases)
+    remove_parser.add_argument('-t', '--task', type=str, required=True, help="The name of the task to remove.")
+
     show_all_aliases = ['sa']
     subparsers.add_parser('show-all', help="Show all tracked tasks.", aliases=show_all_aliases)
     
@@ -236,6 +261,8 @@ def main():
                 tt.start_task(args.task)
             elif args.command == "pause" or args.command in pause_aliases:
                 tt.pause_task()
+            elif args.command == "remove" or args.command in remove_aliases:
+                tt.remove_task(args.task)
             elif args.command == "status" or args.command in status_aliases:
                 ui.show_status(tt)
             elif args.command == "show-all" or args.command in show_all_aliases:
