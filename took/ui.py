@@ -5,13 +5,9 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.text import Text
 from datetime import datetime, timedelta
+from took.constants import *
 
 
-CURRENT = "current_task"
-TASKS = "tasks"
-TASK_NAME = "task_name"
-LAST_UPDATED = "last_updated"
-TIME_SPENT = "time_spent"
 
 # Display the status
 def show_status(tt):
@@ -28,12 +24,10 @@ def show_status(tt):
         formatted_time_spent = tt.format_time_spent(task_info[TIME_SPENT])
         console.print(f"Time Spent (s): {formatted_time_spent}")
         console.print(f"Last Updated: {task_info[LAST_UPDATED]}")
-        
-
     else:
-        console.print(f"No information available for current task: {current_task}")
+        console.print(f"No information available for current task ({current_task}).")
 
-def show_all_tasks(tt):
+def show_all_tasks(tt, include_done):
     console = Console()
     tasks = tt.tasks
     if not tasks:
@@ -49,13 +43,19 @@ def show_all_tasks(tt):
     for key, task in tt.tasks.items():
         _style = ""
         current_indicator = ""
-        if key in tt.current_task:
+        task_name = task[TASK_NAME]
+        if (tt.current_task is not None) and (key == tt.current_task):
             _style = "bold green"
             current_indicator = "*"
-
+        if task[DONE]:
+            if include_done:
+                _style = "dim"
+                task_name = "(done) " + task_name
+            else:
+                continue
         formatted_time_spent = tt.format_time_spent(task[TIME_SPENT])
         table.add_row(current_indicator,
-        task[TASK_NAME],
+        task_name,
         formatted_time_spent,
         task[LAST_UPDATED],
         style=_style)

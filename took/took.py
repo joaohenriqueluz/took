@@ -5,15 +5,8 @@ import os
 import sys
 import took.ui as ui
 import took.git_hooks as git_hooks
+from took.constants import *
 
-TOOK_DIR = ".took"
-FILE_NAME = "took.json"
-CURRENT = "current_task"
-PAUSED = "paused"
-TASKS = "tasks"
-TASK_NAME = "task_name"
-LAST_UPDATED = "last_updated"
-TIME_SPENT = "time_spent"
 
 class TimeTracker:
     def __init__(self):
@@ -85,7 +78,8 @@ class TimeTracker:
             TASK_NAME: task_name,
             LAST_UPDATED: None,
             TIME_SPENT: 0,
-            "log": {}
+            LOG: {},
+            DONE: False
         }
         print(f"Added '{task_name}' to tracked tasks")
 
@@ -120,10 +114,10 @@ class TimeTracker:
                     # Full day (24 hours)
                     time_for_day = 86400
 
-                if date_str in current_task["log"]:
-                    current_task["log"][date_str] += int(time_for_day)
+                if date_str in current_task[LOG]:
+                    current_task[LOG][date_str] += int(time_for_day)
                 else:
-                    current_task["log"][date_str] = int(time_for_day)
+                    current_task[LOG][date_str] = int(time_for_day)
 
                 current_day += timedelta(days=1)
 
@@ -144,7 +138,7 @@ class TimeTracker:
 
     def pause_task(self, ):
         if self.current_task is None:
-            print("No task is currently running.")
+            print("No task is currently running. No action taken.")
             return
         self.paused = True
         print(f"Paused the current task '{self.current_task}'.")
@@ -166,10 +160,22 @@ class TimeTracker:
             print(f"Task '{task_name}' removed from tracked tasks.")
             if self.current_task == task_name:
                 self.current_task = None
-                print("No task is now set as current task.")
+                self.pause = True
+                print("No task is currently running.")
         else:
             print(f"Task '{task_name}' not found.")
 
+    def done_task(self, task_name):
+        if task_name in self.tasks:
+            self.refresh()
+            self.tasks[task_name][DONE] = True
+            print(f"Task '{task_name}' marked as done.")
+            if self.current_task == task_name:
+                self.current_task = None
+                self.pause = True
+                print("No task is currently running.")
+        else:
+            print(f"Task '{task_name}' not found.")    
 
     def format_time_spent(self, total_seconds):
         seconds_in_year = 60 * 60 * 24 * 365
@@ -201,14 +207,15 @@ class TimeTracker:
         return ''.join(parts) if parts else "0s"
 
 
-    def show_status(self, ):
+    def show_status(self):
         self.refresh()
         if len(self.tasks) == 0:
             print("No tasks logged.")
             return
-        for _i,entry in self.tasks.items():
-            formatted_time_spent = self.format_time_spent(entry[TIME_SPENT])
-            print(f"\n|Task: {entry[TASK_NAME]}\n|-Last Updated: {entry[LAST_UPDATED]} \n|-Time Spent: {formatted_time_spent}\n")
+        for entry in self.tasks.values():
+            if not entry[DONE]:
+                formatted_time_spent = self.format_time_spent(entry[TIME_SPENT])
+                print(f"\n|Task: {entry[TASK_NAME]}\n|-Last Updated: {entry[LAST_UPDATED]} \n|-Time Spent: {formatted_time_spent}\n")
 
 
 
@@ -226,12 +233,16 @@ def main():
     pause_aliases = ['p']
     subparsers.add_parser('pause', help="Pause the current task.", aliases=pause_aliases)
 
+    done_parser = subparsers.add_parser('done', help="Mark a task as done.")
+    done_parser.add_argument('-t', '--task', type=str, required=True, help="The name of the task to mark as done.")
+
     remove_aliases = ['rm']
     remove_parser = subparsers.add_parser('remove', help="Remove a tracked task.", aliases=remove_aliases)
     remove_parser.add_argument('-t', '--task', type=str, required=True, help="The name of the task to remove.")
 
     show_all_aliases = ['sa']
-    subparsers.add_parser('show-all', help="Show all tracked tasks.", aliases=show_all_aliases)
+    show_all_parser = subparsers.add_parser('show-all', help="Show all tracked tasks.", aliases=show_all_aliases)
+    show_all_parser.add_argument('--done',  help="Include tasks marked as done when showing all tasks",action='store_true')
     
     status_aliases = ['st']
     subparsers.add_parser('status', help="Show current status.", aliases=status_aliases)
@@ -261,12 +272,14 @@ def main():
                 tt.start_task(args.task)
             elif args.command == "pause" or args.command in pause_aliases:
                 tt.pause_task()
+            elif args.command == "done":
+                tt.done_task(args.task)
             elif args.command == "remove" or args.command in remove_aliases:
                 tt.remove_task(args.task)
             elif args.command == "status" or args.command in status_aliases:
                 ui.show_status(tt)
             elif args.command == "show-all" or args.command in show_all_aliases:
-                ui.show_all_tasks(tt)
+                ui.show_all_tasks(tt, args.done)
             elif args.command == "log":
                 ui.show_task_log(tt,args.task)
             elif args.command == "report" or args.command in report_aliases:
