@@ -1,19 +1,28 @@
+"""
+This module provides functionality for initializing Git hooks by copying predefined 
+hook scripts into the .git/hooks directory of the current repository.
+"""
+
 import os
-import pkg_resources
 import shutil
+import pkg_resources
 
 def init_git_hooks():
     """
     Initializes Git hooks by copying hook scripts into the .git/hooks directory.
 
     This function checks if the .git/hooks directory exists in the current working directory.
-    If it does, it copies the predefined Git hook scripts from the package resources to this directory
-    and sets their permissions to make them executable.
+    If it does, it copies the predefined Git hook scripts from the package resources
+    to this directory and sets their permissions to make them executable.
 
     Hook scripts copied:
+    
     - pre-commit
+    
     - post-commit
+    
     - post-checkout
+    
     - post-merge
 
     If the .git directory is not found, a message is printed and no hooks are installed.

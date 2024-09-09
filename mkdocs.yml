@@ -8,7 +8,8 @@ nav:
       - api-reference/timetracker.md
       - api-reference/ui.md
       - api-reference/git-hooks.md
-    - License: License.md
+    - License:
+      - license.md
 
 theme:
   name: readthedocs
