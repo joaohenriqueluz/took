@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>TimeTracker Class - Took Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "TimeTracker Class";
+        var mkdocs_page_input_path = "api-reference/timetracker.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Took Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Usage</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../getting-started/">Getting started</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Api Reference</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">TimeTracker Class</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker">TimeTracker</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.__init__">__init__</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.check_file">check_file</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.create_task">create_task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.done_task">done_task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.format_time_spent">format_time_spent</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.init_file">init_file</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.load_data">load_data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.pause_task">pause_task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.refresh">refresh</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.remove_task">remove_task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.resume_task">resume_task</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.save_data">save_data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.show_status">show_status</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#took.took.TimeTracker.start_task">start_task</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ui/">UI Renderer</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../git-hooks/">Git Hooks</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">License</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../license/">Took License</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Took Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Api Reference</li>
+      <li class="breadcrumb-item active">TimeTracker Class</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="timetracker-class">TimeTracker Class</h1>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="took.took.TimeTracker"></a>
+    <div class="doc doc-contents first">
+
+
+        <p>The TimeTracker class is a task management and time-tracking tool that allows users to log, 
+track, and manage time spent on various tasks. It stores task data in a JSON file, 
+maintains logs of time spent, and provides features for starting, pausing, resuming, 
+and completing tasks.</p>
+<p>Main functionalities:
+- Task creation, tracking, and removal.
+- Pausing and resuming tasks, tracking time while active.
+- Recording time logs per task and generating daily breakdowns.
+- Loading and saving task data to/from a JSON file.
+- Command-line interface (CLI) support for controlling task operations.</p>
+
+              <details class="quote">
+                <summary>Source code in <code>took/took.py</code></summary>
+                <pre class="highlight"><code class="language-python">class TimeTracker:
+    """
+    The TimeTracker class is a task management and time-tracking tool that allows users to log, 
+    track, and manage time spent on various tasks. It stores task data in a JSON file, 
+    maintains logs of time spent, and provides features for starting, pausing, resuming, 
+    and completing tasks.
+
+    Main functionalities:
+    - Task creation, tracking, and removal.
+    - Pausing and resuming tasks, tracking time while active.
+    - Recording time logs per task and generating daily breakdowns.
+    - Loading and saving task data to/from a JSON file.
+    - Command-line interface (CLI) support for controlling task operations.
+    """
+
+    def __init__(self):
+        """
+        Initializes the TimeTracker object with default values. 
+        - Initializes an empty task dictionary.
+        - Sets the current task and root directory to None and pause state to False.
+        """
+        self.tasks = {}
+        self.current_task = None
+        self.paused = False
+        self.root = None
+
+    def init_file(self):
+        """
+        Initializes the JSON file for tracking tasks if it doesn't exist. 
+        - Creates the directory and file structure for storing the task log.
+        - Initializes the log with default values (empty tasks, no current task, and paused state).
+        """
+        if not os.path.exists(TOOK_DIR):
+            os.makedirs(TOOK_DIR)
+            with open(os.path.join(TOOK_DIR, FILE_NAME), 'w', encoding="utf-8") as file:
+                json.dump({
+                    CURRENT: None,
+                    TASKS: {},
+                    PAUSED: False
+                }, file, indent=4)
+            print("Initialized new empty Took log in the current directory.")
+        else:
+            print("Took log already exists in this directory. No action taken.")
+
+    def check_file(self):
+        """
+        Checks if the current or any parent directory contains a Took tracker project.
+
+        - Searches upwards from the current directory.
+
+        - If no Took directory is found, creates a global Took directory in
+        the user's home directory.
+
+        Returns:
+            str: The path to the Took directory.
+        """
+        current_dir = os.getcwd()
+
+        while True:
+            if os.path.exists(os.path.join(current_dir, TOOK_DIR)):
+                self.root = os.path.join(current_dir, TOOK_DIR)
+                return self.root
+            parent_dir = os.path.dirname(current_dir)
+            if parent_dir == current_dir:  # reached the root without finding .took
+                break
+            current_dir = parent_dir
+
+        home_dir = os.path.expanduser("~")
+        central_took_dir = os.path.join(home_dir, TOOK_DIR)
+        if not os.path.exists(central_took_dir):
+            os.makedirs(central_took_dir)
+            print(f"Created a global Took directory at {central_took_dir}")
+            with open(os.path.join(central_took_dir, FILE_NAME), 'w', encoding="utf-8") as file:
+                json.dump({
+                    CURRENT: None,
+                    TASKS: {},
+                    PAUSED: False
+                }, file, indent=4)
+            print("Initialized new empty Took log in the current directory.")
+        self.root = central_took_dir
+        return self.root
+
+    def load_data(self):
+        """
+        Loads task data from the JSON file into the TimeTracker object.
+
+        - Updates tasks, the current task, and the paused state based on the loaded data.
+        """
+        data = { CURRENT: None, TASKS:{} }
+        if (self.root is not None) and os.path.exists(self.root):
+            with open(os.path.join(self.root, FILE_NAME), 'r', encoding="utf-8") as file:
+                data = json.load(file)
+        self.tasks = data[TASKS]
+        self.current_task = data[CURRENT]
+        self.paused = data[PAUSED]
+
+    def save_data(self):
+        """
+        Saves the current state of tasks, the current task, and the paused state to the JSON file.
+        """
+        data = { CURRENT: self.current_task, TASKS: self.tasks, PAUSED: self.paused }
+        with open(os.path.join(self.root, FILE_NAME), 'w', encoding="utf-8") as file:
+            json.dump(data, file, indent=4)
+
+    def create_task(self, task_name):
+        """
+        Creates a new task in the tracker.
+
+        Args:
+            task_name (str): The name of the task to create.
+        """
+        self.tasks[task_name] = {
+            TASK_NAME: task_name,
+            LAST_UPDATED: None,
+            TIME_SPENT: 0,
+            LOG: {},
+            DONE: False
+        }
+        print(f"Added '{task_name}' to tracked tasks")
+
+    def refresh(self):
+        """
+        Updates the time spent on the current task by calculating the time elapsed
+        since it was last updated.
+        - If the task is not paused, it updates the daily logs and overall time spent.
+        """
+        if self.current_task is None:
+            return
+        current_task = self.tasks[self.current_task]
+        last_updated = datetime.fromisoformat(current_task[LAST_UPDATED])
+        now = datetime.now()
+
+        if not self.paused:
+            elapsed_time = now - last_updated
+            seconds_spent = int(elapsed_time.total_seconds())
+
+            # Iterate through each day between last_updated and now
+            current_day = last_updated.date()
+            end_day = now.date()
+
+            while current_day &lt;= end_day:
+                date_str = current_day.isoformat()
+
+                if current_day == last_updated.date():
+                    # Calculate time from last_updated to end of that day
+                    day_end = datetime.combine(current_day, datetime.max.time())
+                    day_end = min(day_end, now)
+                    time_for_day = (day_end - last_updated).total_seconds()
+                elif current_day == now.date():
+                    # Calculate time from start of today to now
+                    time_for_day = (now - \
+                        datetime.combine(current_day, datetime.min.time())).total_seconds()
+                else:
+                    # Full day (24 hours)
+                    time_for_day = 86400
+
+                if date_str in current_task[LOG]:
+                    current_task[LOG][date_str] += int(time_for_day)
+                else:
+                    current_task[LOG][date_str] = int(time_for_day)
+
+                current_day += timedelta(days=1)
+
+            current_task[TIME_SPENT] += seconds_spent
+        current_task[LAST_UPDATED] = now.isoformat()
+
+    def start_task(self, task_name):
+        """
+        Starts tracking a new or existing task.
+
+        - If a task name is provided, it creates the task if it doesn't exist.
+
+        - If no task is provided, it resumes the current task.
+
+        Args:
+            task_name (str): The name of the task to start.
+        """
+        if task_name is None:
+            self.resume_task()
+        else:
+            self.paused = False
+            if task_name not in self.tasks:
+                self.create_task(task_name)
+            now = datetime.now().isoformat()
+            self.tasks[task_name][LAST_UPDATED] = now
+            self.current_task = task_name
+            print(f"Started tracking task: '{task_name}' at {now}")
+
+    def pause_task(self):
+        """
+        Pauses the currently active task.
+        - Prints a message if no task is running.
+        """
+        if self.current_task is None:
+            print("No task is currently running. No action taken.")
+            return
+        self.paused = True
+        print(f"Paused the current task '{self.current_task}'.")
+
+    def resume_task(self):
+        """
+        Resumes a paused task.
+
+        - If the current task is not paused or no task is paused, prints a warning message.
+        """
+        if self.current_task is None:
+            print("No paused task to resume.")
+            return
+        if not self.paused:
+            print(f"Current task {self.current_task} is not paused. No action taken.")
+            return
+        self.paused = False
+        self.refresh()
+        print(f"Resuming task '{self.current_task}'.")
+
+    def remove_task(self, task_name):
+        """
+        Removes a task from the tracker.
+
+        - If the removed task is the current task, stops tracking it.
+
+        Args:
+            task_name (str): The name of the task to remove.
+        """
+        if task_name in self.tasks:
+            del self.tasks[task_name]
+            print(f"Task '{task_name}' removed from tracked tasks.")
+            if self.current_task == task_name:
+                self.current_task = None
+                self.paused = True
+                print("No task is currently running.")
+        else:
+            print(f"Task '{task_name}' not found.")
+
+    def done_task(self, task_name):
+        """
+        Marks a task as done.
+
+        - Updates the task's status and stops tracking it if it's the current task.
+
+        Args:
+            task_name (str): The name of the task to mark as done.
+        """
+        if task_name in self.tasks:
+            self.refresh()
+            self.tasks[task_name][DONE] = True
+            print(f"Task '{task_name}' marked as done.")
+            if self.current_task == task_name:
+                self.current_task = None
+                self.paused = True
+                print("No task is currently running.")
+        else:
+            print(f"Task '{task_name}' not found.")
+
+    def format_time_spent(self, total_seconds):
+        """
+        Formats the total time spent on a task into a human-readable string.
+
+        Args:
+            total_seconds (int): Total number of seconds to format.
+
+        Returns:
+            str: A formatted string showing the time spent in years, months, days, hours, minutes, and seconds.
+        """
+        seconds_in_year = 60 * 60 * 24 * 365
+        seconds_in_month = 60 * 60 * 24 * 30
+        seconds_in_day = 60 * 60 * 24
+        seconds_in_hour = 60 * 60
+        seconds_in_minute = 60
+
+        years, remainder = divmod(total_seconds, seconds_in_year)
+        months, remainder = divmod(remainder, seconds_in_month)
+        days, remainder = divmod(remainder, seconds_in_day)
+        hours, remainder = divmod(remainder, seconds_in_hour)
+        minutes, seconds = divmod(remainder, seconds_in_minute)
+
+        parts = []
+        if years &gt; 0:
+            parts.append(f"{years}Y-")
+        if months &gt; 0:
+            parts.append(f"{months}M-")
+        if days &gt; 0:
+            parts.append(f"{days}D-")
+        if hours &gt; 0:
+            parts.append(f"{hours}h-")
+        if minutes &gt; 0:
+            parts.append(f"{minutes}m-")
+        if seconds &gt; 0:
+            parts.append(f"{seconds}s")
+
+        return ''.join(parts) if parts else "0s"
+
+    def show_status(self):
+        """
+        Displays the current status of all active tasks, including the time spent on each task.
+
+        - If no tasks are logged, prints a message.
+        """
+        self.refresh()
+        if len(self.tasks) == 0:
+            print("No tasks logged.")
+            return
+        for entry in self.tasks.values():
+            if not entry[DONE]:
+                formatted_time_spent = self.format_time_spent(entry[TIME_SPENT])
+                print(f"\n|Task: {entry[TASK_NAME]}\
+                    \n|-Last Updated: {entry[LAST_UPDATED]}\
+                    \n|-Time Spent: {formatted_time_spent}\n")</code></pre>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.__init__" class="doc doc-heading">
+            <code class="highlight language-python">__init__()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the TimeTracker object with default values. 
+- Initializes an empty task dictionary.
+- Sets the current task and root directory to None and pause state to False.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def __init__(self):
+    """
+    Initializes the TimeTracker object with default values. 
+    - Initializes an empty task dictionary.
+    - Sets the current task and root directory to None and pause state to False.
+    """
+    self.tasks = {}
+    self.current_task = None
+    self.paused = False
+    self.root = None</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.check_file" class="doc doc-heading">
+            <code class="highlight language-python">check_file()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Checks if the current or any parent directory contains a Took tracker project.</p>
+<ul>
+<li>
+<p>Searches upwards from the current directory.</p>
+</li>
+<li>
+<p>If no Took directory is found, creates a global Took directory in
+the user's home directory.</p>
+</li>
+</ul>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>str</code></b>              –
+              <div class="doc-md-description">
+                <p>The path to the Took directory.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def check_file(self):
+    """
+    Checks if the current or any parent directory contains a Took tracker project.
+
+    - Searches upwards from the current directory.
+
+    - If no Took directory is found, creates a global Took directory in
+    the user's home directory.
+
+    Returns:
+        str: The path to the Took directory.
+    """
+    current_dir = os.getcwd()
+
+    while True:
+        if os.path.exists(os.path.join(current_dir, TOOK_DIR)):
+            self.root = os.path.join(current_dir, TOOK_DIR)
+            return self.root
+        parent_dir = os.path.dirname(current_dir)
+        if parent_dir == current_dir:  # reached the root without finding .took
+            break
+        current_dir = parent_dir
+
+    home_dir = os.path.expanduser("~")
+    central_took_dir = os.path.join(home_dir, TOOK_DIR)
+    if not os.path.exists(central_took_dir):
+        os.makedirs(central_took_dir)
+        print(f"Created a global Took directory at {central_took_dir}")
+        with open(os.path.join(central_took_dir, FILE_NAME), 'w', encoding="utf-8") as file:
+            json.dump({
+                CURRENT: None,
+                TASKS: {},
+                PAUSED: False
+            }, file, indent=4)
+        print("Initialized new empty Took log in the current directory.")
+    self.root = central_took_dir
+    return self.root</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.create_task" class="doc doc-heading">
+            <code class="highlight language-python">create_task(task_name)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Creates a new task in the tracker.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>task_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the task to create.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def create_task(self, task_name):
+    """
+    Creates a new task in the tracker.
+
+    Args:
+        task_name (str): The name of the task to create.
+    """
+    self.tasks[task_name] = {
+        TASK_NAME: task_name,
+        LAST_UPDATED: None,
+        TIME_SPENT: 0,
+        LOG: {},
+        DONE: False
+    }
+    print(f"Added '{task_name}' to tracked tasks")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.done_task" class="doc doc-heading">
+            <code class="highlight language-python">done_task(task_name)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Marks a task as done.</p>
+<ul>
+<li>Updates the task's status and stops tracking it if it's the current task.</li>
+</ul>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>task_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the task to mark as done.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def done_task(self, task_name):
+    """
+    Marks a task as done.
+
+    - Updates the task's status and stops tracking it if it's the current task.
+
+    Args:
+        task_name (str): The name of the task to mark as done.
+    """
+    if task_name in self.tasks:
+        self.refresh()
+        self.tasks[task_name][DONE] = True
+        print(f"Task '{task_name}' marked as done.")
+        if self.current_task == task_name:
+            self.current_task = None
+            self.paused = True
+            print("No task is currently running.")
+    else:
+        print(f"Task '{task_name}' not found.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.format_time_spent" class="doc doc-heading">
+            <code class="highlight language-python">format_time_spent(total_seconds)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Formats the total time spent on a task into a human-readable string.</p>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>total_seconds</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>Total number of seconds to format.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Returns:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+<b><code>str</code></b>              –
+              <div class="doc-md-description">
+                <p>A formatted string showing the time spent in years, months, days, hours, minutes, and seconds.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def format_time_spent(self, total_seconds):
+    """
+    Formats the total time spent on a task into a human-readable string.
+
+    Args:
+        total_seconds (int): Total number of seconds to format.
+
+    Returns:
+        str: A formatted string showing the time spent in years, months, days, hours, minutes, and seconds.
+    """
+    seconds_in_year = 60 * 60 * 24 * 365
+    seconds_in_month = 60 * 60 * 24 * 30
+    seconds_in_day = 60 * 60 * 24
+    seconds_in_hour = 60 * 60
+    seconds_in_minute = 60
+
+    years, remainder = divmod(total_seconds, seconds_in_year)
+    months, remainder = divmod(remainder, seconds_in_month)
+    days, remainder = divmod(remainder, seconds_in_day)
+    hours, remainder = divmod(remainder, seconds_in_hour)
+    minutes, seconds = divmod(remainder, seconds_in_minute)
+
+    parts = []
+    if years &gt; 0:
+        parts.append(f"{years}Y-")
+    if months &gt; 0:
+        parts.append(f"{months}M-")
+    if days &gt; 0:
+        parts.append(f"{days}D-")
+    if hours &gt; 0:
+        parts.append(f"{hours}h-")
+    if minutes &gt; 0:
+        parts.append(f"{minutes}m-")
+    if seconds &gt; 0:
+        parts.append(f"{seconds}s")
+
+    return ''.join(parts) if parts else "0s"</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.init_file" class="doc doc-heading">
+            <code class="highlight language-python">init_file()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Initializes the JSON file for tracking tasks if it doesn't exist. 
+- Creates the directory and file structure for storing the task log.
+- Initializes the log with default values (empty tasks, no current task, and paused state).</p>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def init_file(self):
+    """
+    Initializes the JSON file for tracking tasks if it doesn't exist. 
+    - Creates the directory and file structure for storing the task log.
+    - Initializes the log with default values (empty tasks, no current task, and paused state).
+    """
+    if not os.path.exists(TOOK_DIR):
+        os.makedirs(TOOK_DIR)
+        with open(os.path.join(TOOK_DIR, FILE_NAME), 'w', encoding="utf-8") as file:
+            json.dump({
+                CURRENT: None,
+                TASKS: {},
+                PAUSED: False
+            }, file, indent=4)
+        print("Initialized new empty Took log in the current directory.")
+    else:
+        print("Took log already exists in this directory. No action taken.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.load_data" class="doc doc-heading">
+            <code class="highlight language-python">load_data()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Loads task data from the JSON file into the TimeTracker object.</p>
+<ul>
+<li>Updates tasks, the current task, and the paused state based on the loaded data.</li>
+</ul>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def load_data(self):
+    """
+    Loads task data from the JSON file into the TimeTracker object.
+
+    - Updates tasks, the current task, and the paused state based on the loaded data.
+    """
+    data = { CURRENT: None, TASKS:{} }
+    if (self.root is not None) and os.path.exists(self.root):
+        with open(os.path.join(self.root, FILE_NAME), 'r', encoding="utf-8") as file:
+            data = json.load(file)
+    self.tasks = data[TASKS]
+    self.current_task = data[CURRENT]
+    self.paused = data[PAUSED]</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.pause_task" class="doc doc-heading">
+            <code class="highlight language-python">pause_task()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Pauses the currently active task.
+- Prints a message if no task is running.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def pause_task(self):
+    """
+    Pauses the currently active task.
+    - Prints a message if no task is running.
+    """
+    if self.current_task is None:
+        print("No task is currently running. No action taken.")
+        return
+    self.paused = True
+    print(f"Paused the current task '{self.current_task}'.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.refresh" class="doc doc-heading">
+            <code class="highlight language-python">refresh()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Updates the time spent on the current task by calculating the time elapsed
+since it was last updated.
+- If the task is not paused, it updates the daily logs and overall time spent.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def refresh(self):
+    """
+    Updates the time spent on the current task by calculating the time elapsed
+    since it was last updated.
+    - If the task is not paused, it updates the daily logs and overall time spent.
+    """
+    if self.current_task is None:
+        return
+    current_task = self.tasks[self.current_task]
+    last_updated = datetime.fromisoformat(current_task[LAST_UPDATED])
+    now = datetime.now()
+
+    if not self.paused:
+        elapsed_time = now - last_updated
+        seconds_spent = int(elapsed_time.total_seconds())
+
+        # Iterate through each day between last_updated and now
+        current_day = last_updated.date()
+        end_day = now.date()
+
+        while current_day &lt;= end_day:
+            date_str = current_day.isoformat()
+
+            if current_day == last_updated.date():
+                # Calculate time from last_updated to end of that day
+                day_end = datetime.combine(current_day, datetime.max.time())
+                day_end = min(day_end, now)
+                time_for_day = (day_end - last_updated).total_seconds()
+            elif current_day == now.date():
+                # Calculate time from start of today to now
+                time_for_day = (now - \
+                    datetime.combine(current_day, datetime.min.time())).total_seconds()
+            else:
+                # Full day (24 hours)
+                time_for_day = 86400
+
+            if date_str in current_task[LOG]:
+                current_task[LOG][date_str] += int(time_for_day)
+            else:
+                current_task[LOG][date_str] = int(time_for_day)
+
+            current_day += timedelta(days=1)
+
+        current_task[TIME_SPENT] += seconds_spent
+    current_task[LAST_UPDATED] = now.isoformat()</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.remove_task" class="doc doc-heading">
+            <code class="highlight language-python">remove_task(task_name)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Removes a task from the tracker.</p>
+<ul>
+<li>If the removed task is the current task, stops tracking it.</li>
+</ul>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>task_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the task to remove.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def remove_task(self, task_name):
+    """
+    Removes a task from the tracker.
+
+    - If the removed task is the current task, stops tracking it.
+
+    Args:
+        task_name (str): The name of the task to remove.
+    """
+    if task_name in self.tasks:
+        del self.tasks[task_name]
+        print(f"Task '{task_name}' removed from tracked tasks.")
+        if self.current_task == task_name:
+            self.current_task = None
+            self.paused = True
+            print("No task is currently running.")
+    else:
+        print(f"Task '{task_name}' not found.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.resume_task" class="doc doc-heading">
+            <code class="highlight language-python">resume_task()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Resumes a paused task.</p>
+<ul>
+<li>If the current task is not paused or no task is paused, prints a warning message.</li>
+</ul>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def resume_task(self):
+    """
+    Resumes a paused task.
+
+    - If the current task is not paused or no task is paused, prints a warning message.
+    """
+    if self.current_task is None:
+        print("No paused task to resume.")
+        return
+    if not self.paused:
+        print(f"Current task {self.current_task} is not paused. No action taken.")
+        return
+    self.paused = False
+    self.refresh()
+    print(f"Resuming task '{self.current_task}'.")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.save_data" class="doc doc-heading">
+            <code class="highlight language-python">save_data()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Saves the current state of tasks, the current task, and the paused state to the JSON file.</p>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def save_data(self):
+    """
+    Saves the current state of tasks, the current task, and the paused state to the JSON file.
+    """
+    data = { CURRENT: self.current_task, TASKS: self.tasks, PAUSED: self.paused }
+    with open(os.path.join(self.root, FILE_NAME), 'w', encoding="utf-8") as file:
+        json.dump(data, file, indent=4)</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.show_status" class="doc doc-heading">
+            <code class="highlight language-python">show_status()</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Displays the current status of all active tasks, including the time spent on each task.</p>
+<ul>
+<li>If no tasks are logged, prints a message.</li>
+</ul>
+
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def show_status(self):
+    """
+    Displays the current status of all active tasks, including the time spent on each task.
+
+    - If no tasks are logged, prints a message.
+    """
+    self.refresh()
+    if len(self.tasks) == 0:
+        print("No tasks logged.")
+        return
+    for entry in self.tasks.values():
+        if not entry[DONE]:
+            formatted_time_spent = self.format_time_spent(entry[TIME_SPENT])
+            print(f"\n|Task: {entry[TASK_NAME]}\
+                \n|-Last Updated: {entry[LAST_UPDATED]}\
+                \n|-Time Spent: {formatted_time_spent}\n")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="took.took.TimeTracker.start_task" class="doc doc-heading">
+            <code class="highlight language-python">start_task(task_name)</code>
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Starts tracking a new or existing task.</p>
+<ul>
+<li>
+<p>If a task name is provided, it creates the task if it doesn't exist.</p>
+</li>
+<li>
+<p>If no task is provided, it resumes the current task.</p>
+</li>
+</ul>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>task_name</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>The name of the task to start.</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>took/took.py</code></summary>
+              <pre class="highlight"><code class="language-python">def start_task(self, task_name):
+    """
+    Starts tracking a new or existing task.
+
+    - If a task name is provided, it creates the task if it doesn't exist.
+
+    - If no task is provided, it resumes the current task.
+
+    Args:
+        task_name (str): The name of the task to start.
+    """
+    if task_name is None:
+        self.resume_task()
+    else:
+        self.paused = False
+        if task_name not in self.tasks:
+            self.create_task(task_name)
+        now = datetime.now().isoformat()
+        self.tasks[task_name][LAST_UPDATED] = now
+        self.current_task = task_name
+        print(f"Started tracking task: '{task_name}' at {now}")</code></pre>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../getting-started/" class="btn btn-neutral float-left" title="Getting started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../ui/" class="btn btn-neutral float-right" title="UI Renderer">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../getting-started/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../ui/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
