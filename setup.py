@@ -14,7 +14,7 @@ setup(
         ],
     },
     install_requires=[
-        "rich>=13.0.0",
+        "rich>=13.0.0"
     ],
     author="loaojuz",
     author_email="",
